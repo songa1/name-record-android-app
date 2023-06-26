@@ -26,18 +26,24 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add your name"
-            android:id="@+id/txtAmount"
-            android:paddingBottom="20dp"/>
+            android:id="@+id/nameField"
+            android:paddingBottom="20dp"
+            android:hint="Your Name"/>
 
         <Button
-            android:id="@+id/btnSend"
+            android:id="@+id/insertName"
+            android:layout_width="372dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:onClick="saveName"
+            android:text="Submit Name"
+            app:backgroundTint="#9f0000" />
+
+        <Button
+            android:id="@+id/viewNames"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Submit Name"
-            android:layout_marginTop="20dp"
-            app:backgroundTint="#9f0000"
-            android:onClick="saveName"/>
+            android:text="View names" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

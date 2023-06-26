@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ViewActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="80dp"
+        android:padding="20dp"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="381dp"
+        android:layout_height="55dp"
+        android:accessibilityLiveRegion="polite"
+        android:breakStrategy="high_quality"
+        android:padding="10dp"
+        android:text="Names Stored"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="@color/main"
+        android:textSize="20sp"
+        android:visibility="visible"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="14dp"
+        tools:layout_editor_absoluteY="78dp"
+        tools:visibility="visible" />
+
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="394dp"
+            android:layout_height="427dp"
+            android:background="@color/design_default_color_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.477"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:clickable="true"
+            android:contextClickable="true"
+            app:layout_constraintVertical_bias="0.497" />
+
+        <Button
+        android:id="@+id/backHome"
+        android:layout_width="372dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:onClick="saveName"
+        android:text="Back Home"
+        app:backgroundTint="#9f0000"
+        tools:ignore="MissingConstraints" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

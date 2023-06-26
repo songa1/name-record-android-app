@@ -5,50 +5,47 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ListView;
 
-public class MainActivity extends AppCompatActivity {
-    private Button addName;
-    private Button getNames;
-    private EditText name;
+import java.util.ArrayList;
+
+public class ViewActivity extends AppCompatActivity {
+
+    private ListView viewNames;
+    private Button back;
     private DatabaseHelper databaseHelper;
-    @SuppressLint("MissingInflatedId")
+//    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_view);
+
         try {
-
+            viewNames = findViewById(R.id.listView);
             databaseHelper = new DatabaseHelper(getApplicationContext());
+            back = findViewById(R.id.backHome);
 
-            name = findViewById(R.id.nameField);
-            addName = findViewById(R.id.insertName);
-            getNames = findViewById(R.id.viewNames);
+            ArrayList<String> dataList = databaseHelper.fetchNames();
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, dataList);
 
-            addName.setOnClickListener(new View.OnClickListener() {
+            viewNames.setAdapter(adapter);
+
+            back.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String getName = name.getText().toString();
-                    databaseHelper.insertName(new Data(getName));
-                }
-            });
-
-            getNames.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(getApplicationContext(), ViewActivity.class);
+                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(i);
                 }
             });
         } catch (Exception e) {
+
             display("Error", e.getMessage());
-//            Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
             System.out.println(e.getMessage());
+
         }
     }
 
