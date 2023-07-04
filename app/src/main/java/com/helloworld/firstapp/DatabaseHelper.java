@@ -17,17 +17,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "DatabaseHelper";
 
     public DatabaseHelper(@Nullable Context context) {
-        super(context, "myDb.db", null, 21);
+        super(context, "contactDb.db", null, 21);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table if not exists names (id integer primary key autoincrement, name text)");
+        db.execSQL("create table if not exists contacts (id integer primary key autoincrement, name text, phone text)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("drop table if exists names");
+        db.execSQL("drop table if exists contacts");
         onCreate(db);
     }
 
@@ -35,7 +35,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("name", data.getName());
-        long myNames = sqLiteDatabase.insert("names", null, contentValues);
+        contentValues.put("phone", data.getPhone());
+        long myNames = sqLiteDatabase.insert("contacts", null, contentValues);
 
         Log.e(TAG, "insertData: "+ myNames);
     }
@@ -44,10 +45,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ArrayList<String> nameList = new ArrayList<>();
 
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT name FROM names", null);
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT name, phone FROM contacts", null);
 
         while (cursor.moveToNext()) {
-            nameList.add(cursor.getString(0));
+            nameList.add(cursor.getString(0) + " <" +cursor.getString(1) + ">");
         }
 
 //        cursor.close();

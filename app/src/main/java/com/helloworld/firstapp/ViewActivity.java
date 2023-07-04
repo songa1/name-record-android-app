@@ -4,9 +4,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.LauncherActivity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -17,7 +20,9 @@ public class ViewActivity extends AppCompatActivity {
 
     private ListView viewNames;
     private Button back;
+    private LauncherActivity.ListItem item;
     private DatabaseHelper databaseHelper;
+    public String phoneNumber;
 //    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +35,21 @@ public class ViewActivity extends AppCompatActivity {
             back = findViewById(R.id.backHome);
 
             ArrayList<String> dataList = databaseHelper.fetchNames();
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, dataList);
+
+            viewNames.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    phoneNumber = parent.getItemAtPosition(position).toString().split("<")[1];
+                    intent.setData(Uri.parse("tel:*182*1*1*"+phoneNumber+"#"));
+                    startActivity(intent);
+                }
+            });
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, dataList);
 
             viewNames.setAdapter(adapter);
+
 
             back.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -45,7 +62,6 @@ public class ViewActivity extends AppCompatActivity {
 
             display("Error", e.getMessage());
             System.out.println(e.getMessage());
-
         }
     }
 

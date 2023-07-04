@@ -16,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
     private Button addName;
     private Button getNames;
     private EditText name;
+    private EditText phone;
+    private Button articles;
     private DatabaseHelper databaseHelper;
     @SuppressLint("MissingInflatedId")
     @Override
@@ -27,14 +29,19 @@ public class MainActivity extends AppCompatActivity {
             databaseHelper = new DatabaseHelper(getApplicationContext());
 
             name = findViewById(R.id.nameField);
+            phone = findViewById(R.id.phoneField);
             addName = findViewById(R.id.insertName);
             getNames = findViewById(R.id.viewNames);
+            articles = findViewById(R.id.readArticles);
 
             addName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     String getName = name.getText().toString();
-                    databaseHelper.insertName(new Data(getName));
+                    String getPhone = phone.getText().toString();
+                    databaseHelper.insertName(new Data(getName, getPhone));
+                    name.setText("");
+                    phone.setText("");
                 }
             });
 
@@ -42,6 +49,14 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(getApplicationContext(), ViewActivity.class);
+                    startActivity(i);
+                }
+            });
+
+            articles.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(getApplicationContext(), ArticlesActivity.class);
                     startActivity(i);
                 }
             });
